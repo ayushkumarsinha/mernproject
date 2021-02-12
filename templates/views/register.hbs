@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{>header}}
+    <title>Registration</title>
+</head>
+<body>
+    {{>navbar}}
+    <div class="login-register">
+        <h4 class="header-heading">Registration</h4>
+        <div>
+            <div class="col-12 mx-auto">
+                <form action="/register" method="POST">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input type="text" class="form-control" name="firstname" id="firstname" placeholder="First name">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Last name">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input type="email" class="form-control" name="email" id="inputEmail" placeholder="Email">
+                        </div>
+                        <div class="form-group d-flex col-md-6">
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label" for="gender">Gender:</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="male" value="Male" checked>
+                                <label class="form-check-label" for="male">Male</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="female" value="Female">
+                                <label class="form-check-label" for="female">Female</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input type="text" class="form-control" name="age" id="age" placeholder="Age"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input type="password" class="form-control" name="password" id="inputPassword" placeholder="Password">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input type="password" class="form-control" name="confirmpassword" id="confirmPassword" placeholder="Confirm Password">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <button type="submit" class="btn btn-primary mx-auto">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

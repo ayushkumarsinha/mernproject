@@ -1,0 +1,35 @@
+:root {
+    --theme: #663399;
+    --white: #ffffff;
+}
+
+body{
+    background-color: var(--theme);
+    /* background-image: url('../images/photo1.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover; */
+}
+
+.header-heading{
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.image-carousel{
+    width: fit-content;
+    height: fit-content;
+    max-height: 350px;
+}
+
+.login-register{
+    border: 1px solid var(--theme);
+    padding: 10px;
+    margin: 20px 20% 20px 20%;;
+    background-color: var(--white);
+}
+
+.color-white{
+    color: var(--white);
+}
