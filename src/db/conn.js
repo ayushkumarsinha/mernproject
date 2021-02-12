@@ -1,7 +1,7 @@
 // const express = require("express");
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/youtubeRegistration",{
+mongoose.connect(process.env.DB_name,{
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
