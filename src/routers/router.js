@@ -3,6 +3,8 @@ const router = new express.Router();
 const Register = require("../models/registers");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const cookieParser  = require("cookie-parser");
+const auth = require("../middleware/auth");
 
 router.get("/", (req, res)=>{
     try {
@@ -16,7 +18,13 @@ router.get("/", (req, res)=>{
 router.get("/login", (req, res)=>{
     try {
         //const data = await MensRanking.find().sort({"ranking":1});
-        res.render("login"); // since view engine of hbs is used it will go to views->login.hbs
+        //res.render("login"); // since view engine of hbs is used it will go to views->login.hbs
+        if(req.cookies.jwt === undefined)
+            res.status(200).render("login");
+        else{
+            res.status(200).showAlert('Already loggedin!');
+            // res.status(200).render("photos");
+        }
     } catch (error) {
         res.send(error);
     }
@@ -51,6 +59,19 @@ router.get("/register", (req, res)=>{
     }
 });
 
+router.get("/home", auth, (req, res)=>{
+    try {
+        //if(req.cookies.jwt === undefined)
+        //    res.status(200).render("login");
+        //else{
+            res.status(200).render("home");
+            // res.status(200).render("photos");
+        //}
+    } catch (error) {
+        res.send(error);
+    }
+});
+
 router.post("/home", async (req, res)=>{
     try {
         const email = req.body.email;
@@ -58,6 +79,21 @@ router.post("/home", async (req, res)=>{
         const userEmail = await Register.findOne({email: email});
         const isMatched = await bcrypt.compare(password, userEmail.password);
         const token = await userEmail.generateAuthToken();
+        //res.cookie() function is used to set the cookie name and value.
+        //The value parameter may be a string or object converted to json.
+        //3rd parameter can be the {expires: new Date(Date.now() + 3000), httpOnly: true} to expire token in 3 seconds
+        // res.cookie("jwt", token, {
+        //     expires: new Date(Date.now() + 300000), 
+        //     httpOnly: true
+        //     //secure: true // when we use https instead of http
+        // });
+        if(req.cookies.jwt === undefined){
+            res.cookie("jwt", token, {
+                expires: new Date(Date.now() + 300000), 
+                httpOnly: true
+                //secure: true // when we use https instead of http
+            });
+        }
         if(isMatched){
             res.status(200).render("home"); 
         }
@@ -81,6 +117,21 @@ router.get("/registrationSuccessful", (req, res)=>{
     }
 });
 
+router.get("/photos", auth, (req, res)=>{
+    try {
+        // const data = await MensRanking.find().sort({"ranking":1});
+        // res.send(data);
+        // console.log(req.cookies.jwt);
+        // if(req.cookies.jwt !== undefined)
+            res.status(200).render("photos");
+        // else{
+        //     res.status(200).render("login");
+        // }
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
 router.post("/register", async (req, res)=>{
     try {
         const password = req.body.password;
@@ -98,6 +149,13 @@ router.post("/register", async (req, res)=>{
             });
             //middleware
             const token = await registerEmployee.generateAuthToken();
+            //res.cookie() function is used to set the cookie name and value.
+            //The value parameter may be a string or object converted to json.
+            //3rd parameter can be the {expires: new Date(Date.now() + 3000), httpOnly: true} to expire token in 3 seconds
+            res.cookie("jwt", token, {
+                expires: new Date(Date.now() + 300000), 
+                httpOnly: true
+            });
             const registered = await registerEmployee.save();
             res.status(201).render("registrationSuccessful");
         }
@@ -119,6 +177,32 @@ router.get("/contactUs", (req, res)=>{
         // const data = await MensRanking.find().sort({"ranking":1});
         // res.send(data);
         res.status(200).render("contactUs");
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+router.get("/logout", auth, async (req, res)=>{
+    try {
+        req.user.tokens = req.user.tokens.filter((currentToken)=>{
+            return currentToken.token !== req.token;
+        });
+        res.clearCookie("jwt");
+        console.log("logged out successfully");
+        await req.user.save();
+        res.status(200).render("login");
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+router.get("/logoutAllDevices", auth, async (req, res)=>{
+    try {
+        req.user.tokens = [];
+        res.clearCookie("jwt");
+        console.log("logged out successfully");
+        await req.user.save();
+        res.status(200).render("login");
     } catch (error) {
         res.status(500).send(error);
     }

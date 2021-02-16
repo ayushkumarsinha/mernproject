@@ -49,6 +49,7 @@ const employeeSchema = new mongoose.Schema({
 employeeSchema.methods.generateAuthToken = async function(){
     try {
         //mynameiswindowsusertogeneratetoken is the unique secret key which can be anything of minimum 32 char length
+        //3rd parameter can be the expiresIn= '2 seconds' to expire token in 2 seconds
         const generatedToken = jwt.sign({_id: this._id.toString()}, process.env.SECRET_KEY);
         this.tokens = this.tokens.concat({token: generatedToken});
         await this.save();

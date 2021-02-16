@@ -2,13 +2,15 @@
     --theme: #663399;
     --white: #ffffff;
 }
+html{
+    height: 100%;
+}
 
 body{
     background-color: var(--theme);
-    /* background-image: url('../images/photo1.png');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover; */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .header-heading{
@@ -32,4 +34,21 @@ body{
 
 .color-white{
     color: var(--white);
+}
+
+footer{
+    border: 1px solid var(--theme);
+    padding: 10px;
+    margin-top: auto;
+    background-color: var(--white);
+}
+
+.footer-style{
+    background-color: var(--theme);
+    color: white !important;
+}
+
+.header-style{
+    background-color: var(--theme);
+    color: white !important;
 }

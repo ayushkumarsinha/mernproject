@@ -13,28 +13,29 @@
                 <form action="/home" method="POST">
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <input type="email" class="form-control" name="email" required id="inputEmail" placeholder="Email">
+                            <input type="email" class="form-control" name="email" required id="email" placeholder="Email">
                         </div>
                         <div class="form-group col-md-6">
-                            <input type="password" class="form-control" name="password" required id="inputPassword" placeholder="Password">
+                            <input type="password" class="form-control" name="password" required id="password" placeholder="Password">
                         </div>
                     </div>
-                    <div class="form-row">
+                    {{!-- <div class="form-row">
                         <div class="form-group col-md-6">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="rememberme" id="rememberme">
-                                <label class="form-check-label" for="rememberme">
+                                <input class="form-check-input" type="checkbox" name="rememberme" id="rememberme" aria-disabled="true">
+                                <label class="form-check-label" for="rememberme" aria-readonly="true">
                                 Remember me
                                 </label>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="form-row">
                         <button type="submit" class="btn btn-primary mx-auto">Sign in</button>
                     </div>
                 </form>
             </div>
         </div>
-        </div>
+    </div>
+    {{>footer}}
 </body>
 </html>
